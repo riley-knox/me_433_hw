@@ -1,0 +1,14 @@
+# .jpg files
+*.jpg
+
+# .odt files
+*.odt
+
+# Makefiles
+*Makefile
+
+# stuff in 'nbproject' folders
+*nbproject*
+
+/HW_1/homework1.X/build/
+/HW_1/homework1.X/dist/
