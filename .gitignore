@@ -1,5 +1,8 @@
-# .jpg files
+# IMAGES
 *.jpg
+
+# VIDEOS
+*.MOV
 
 # .odt files
 *.odt

@@ -61,47 +61,32 @@ int main() {
     ssd1306_clear();
     ssd1306_update();
     
-    __builtin_enable_interrupts();
+    __builtin_enable_interrupts();  // re-enable interrupts
     
-    int t_LED = 0;          // "heartbeat" counter; rolls over every 1/10 second to toggle LED
-//    int t_pixel = 0;    // 1Hz pixel on/off timer
-    int a = 0;              // counter variable
-    char count_message[50];       // array holding string to print
+    int t_LED = 0;                  // "heartbeat" counter; rolls over every 1/10 second to toggle LED
+    int a = 0;                      // counter variable
+    char count_message[50];         // array holding string to print
     char fps_message[50];
     
     while (1) {
-        _CP0_SET_COUNT(0);                      // reset core timer
+        _CP0_SET_COUNT(0);                              // reset core timer
 
-//        ssd1306_clear();
-//        ssd1306_update();
+        sprintf(count_message, "Count = %d", a);        // create count string
         
-//        blink pixel at (10, 5) at 1 Hz
-//        
-//        if (t_pixel > 24000000) {
-//            ssd1306_drawPixel(10, 5, 1 - (a % 2));
-//            ssd1306_update();
-//            
-//            a++;
-//            t_pixel = 0;
-//        }
+        drawString(0, 0, count_message);                // print string to screen
 
-        sprintf(count_message, "Count = %d", a);       // create string to print
+        sprintf(fps_message, "FPS rate = %5.2f", (double)24000000/(double)_CP0_GET_COUNT());    // create FPS string
         
-        drawString(0, 0, count_message);                  // print string to screen
-
-        sprintf(fps_message, "FPS rate = %5.2f", (double)24000000/(double)_CP0_GET_COUNT());
+        drawString(0, 2, fps_message);                  // print string to screen
         
-        drawString(0, 2, fps_message);
-        
-        a++;                                        // iterate counter
+        a++;                                            // iterate counter
         
         
-        if (t_LED > 24000000/10) {          // if elapsed time exceeds 1/10 second
-            LATAbits.LATA4 = !LATAbits.LATA4;   // toggle LED
-            t_LED = 0;                      // reset heartbeat counter
+        if (t_LED > 24000000/10) {                      // if elapsed time exceeds 1/10 second
+            LATAbits.LATA4 = !LATAbits.LATA4;           // toggle LED
+            t_LED = 0;                                  // reset heartbeat counter
         }
         
-        t_LED += _CP0_GET_COUNT();          // add iteration time to heartbeat counter
-//        t_pixel += _CP0_GET_COUNT();
+        t_LED += _CP0_GET_COUNT();                      // add iteration time to heartbeat counter
     }
 }
