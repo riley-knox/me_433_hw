@@ -171,7 +171,7 @@ int main() {
         }
         else if (ctmu_1 < 6000 && ctmu_2 < 6000) {  // both contacts touched
             LED = 2;                                // third LED (white)
-            level = (ctmu_1 + ctmu_2)/9000.0;
+            level = (float) ctmu_1/(float) (ctmu_1 + ctmu_2);
             
             sprintf(message, "%.2f", level);        // print brightness level to string
             drawString(10, 2, message);             // display brightness level on screen
